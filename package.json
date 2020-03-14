@@ -1,5 +1,5 @@
 {
-  "name": "@rhc/core",
+  "name": "react-hook-carousel",
   "version": "0.0.1",
   "description": "lightweight simple react hook carousel",
   "main": "lib/index.js",
@@ -14,7 +14,7 @@
     "slider"
   ],
   "author": "Sidali Temkit",
-  "license": "ISC",
+  "license": "MIT",
   "peerDependencies": {
     "react": "^16.13.0"
   },
