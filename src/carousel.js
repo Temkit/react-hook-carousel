@@ -130,6 +130,7 @@ const Carousel = ({ items, groupBy, showDots, showButton, effect }) => {
                 ) : (
                   <img
                     src={item.src || item.image || item.img}
+                    alt={item.alt}
                     style={{ width: "100%" }}
                   />
                 )}
