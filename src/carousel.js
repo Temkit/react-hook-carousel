@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from "react";
+import * as swipe from "swiped-events";
 import "./styles/carousel.css";
 
-const Carousel = ({ items, groupBy, showDots, effect }) => {
+const Carousel = ({ items, groupBy, showDots, showButton, effect }) => {
   const [slideIndex, setSlideIndex] = useState(0);
   const [carouselitems, setCarouselitems] = useState(null);
   const [width, setWidth] = useState(null);
@@ -10,10 +11,29 @@ const Carousel = ({ items, groupBy, showDots, effect }) => {
 
   useEffect(() => {
     window.addEventListener("resize", updateDimensions, { passive: true });
+    document
+      .getElementById("rhc-carousel")
+      .addEventListener("swiped-left", e => {
+        console.log(e);
+        plusSlides(-1);
+      });
+
+    document
+      .getElementById("rhc-carousel")
+      .addEventListener("swiped-right", e => {
+        console.log(e);
+        plusSlides(1);
+      });
 
     // returned function will be called on component unmount
     return () => {
       window.removeEventListener("resize", updateDimensions);
+      document
+        .getElementById("rhc-carousel")
+        .removeEventListener("swiped-right");
+      document
+        .getElementById("rhc-carousel")
+        .removeEventListener("swiped-left");
     };
   }, []);
 
@@ -51,7 +71,6 @@ const Carousel = ({ items, groupBy, showDots, effect }) => {
   };
 
   const showSlides = n => {
-    console.log(n);
     var i;
     var slides = document.getElementsByClassName(className);
     var dots = document.getElementsByClassName(className + "dot");
@@ -81,7 +100,7 @@ const Carousel = ({ items, groupBy, showDots, effect }) => {
 
   return (
     <>
-      <div className="slideshowContainer">
+      <div className="slideshowContainer" id="rhc-carousel">
         {carouselitems &&
           carouselitems.map((item, i) => {
             return (
@@ -95,14 +114,15 @@ const Carousel = ({ items, groupBy, showDots, effect }) => {
                     style={{
                       display: "flex",
                       flexDirection: "row",
-                      justifyContent: "space-between"
+                      justifyContent: "space-between",
+                      alignItems: "center"
                     }}
                   >
                     {item.map(i => {
                       return (
                         <img
                           src={i.src || i.image || i.img}
-                          style={{ width: width + "%" }}
+                          style={{ width: width + "%", height: "100%" }}
                         />
                       );
                     })}
@@ -116,12 +136,18 @@ const Carousel = ({ items, groupBy, showDots, effect }) => {
               </div>
             );
           })}
-        <a className="prev" onClick={() => plusSlides(-1)}>
-          &#10094;
-        </a>
-        <a className="next" onClick={() => plusSlides(1)}>
-          &#10095;
-        </a>
+        <>
+          {showButton && (
+            <>
+              <a className="prev" onClick={() => plusSlides(-1)}>
+                &#10094;
+              </a>
+              <a className="next" onClick={() => plusSlides(1)}>
+                &#10095;
+              </a>
+            </>
+          )}
+        </>
       </div>
 
       {showDots && (
