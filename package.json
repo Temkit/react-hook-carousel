@@ -1,6 +1,6 @@
 {
   "name": "react-hook-carousel",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "lightweight simple react hook carousel",
   "main": "lib/index.js",
   "private": false,
